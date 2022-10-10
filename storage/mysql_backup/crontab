@@ -1,0 +1,6 @@
+#禁止在windows下编辑
+
+*/10 * * * * /root/mysql_backup/mysql_dump_script.sh
+
+#每天凌晨2点
+#00 02 * * * /root/mysql_backup/mysql_dump_script.sh

@@ -1,0 +1,29 @@
+groups:
+  - name: MySQL
+    rules:
+      - alert: MySQL is down
+        expr: mysql_up == 0
+        for: 5s
+        labels:
+          severity: critical
+        annotations:
+          summary: "MySQL数据库掉线了"
+          description: "MySQL数据库掉线了"
+
+      - alert: Mysql_High_QPS
+        expr: rate(mysql_global_status_questions[5m]) > 500
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{$labels.instance}}: Mysql_High_QPS detected"
+          description: "{{$labels.instance}}: Mysql opreation is more than 500 per second ,(current value is: {{ $value }})"
+
+      - alert: Mysql_Too_Many_Connections
+        expr: rate(mysql_global_status_threads_connected[5m]) > 200
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{$labels.instance}}: Mysql Too Many Connections detected"
+          description: "{{$labels.instance}}: Mysql Connections is more than 100 per second ,(current value is: {{ $value }})"

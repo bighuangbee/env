@@ -1,0 +1,50 @@
+global:
+  scrape_interval:     15s #抓取间隔, 15秒向目标抓取一次数据
+  evaluation_interval: 15s #触发告警检测的时间
+
+rule_files:
+  - /etc/prometheus/alert_rules/*.yml
+
+alerting:
+  alertmanagers:
+  - scheme: http
+    static_configs:
+    - targets: ["192.168.80.94:9093"]
+
+#抓取监控指标数据的目标
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['192.168.80.94:9090']
+
+  - job_name: 'nodes'
+    scrape_interval: 5s # 重写抓取间隔时间
+    static_configs:
+    - targets: ['192.168.80.94:9100', '192.168.80.94:9101']
+      labels:
+        group: 'client-node'
+
+  - job_name: 'pushGateway'
+    static_configs:
+    - targets: ['192.168.80.94:9091']
+
+  - job_name: 'mysql'
+    static_configs:
+      - targets: ['192.168.80.94:9104']
+
+  - job_name: 'redis'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['192.168.80.94:9121']
+
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['192.168.80.94:9113']
+
+  - job_name: 'etcd'
+    static_configs:
+      - targets: ['192.168.80.94:2379']
+
+  - job_name: 'cAdvisor'
+    static_configs:
+      - targets: ['192.168.80.94:8081']

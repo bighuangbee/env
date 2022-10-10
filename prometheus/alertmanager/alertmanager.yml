@@ -1,0 +1,19 @@
+global:
+  resolve_timeout: 2m #持续多长时间未接收到告警后标记告警状态为resolved
+route:
+  group_by: [ 'alertname' ] # 将传入的报警中有这些标签的分为一个组
+  group_wait: 15s # 组报警等待时间，第一次触发报警的延时
+  group_interval: 10s # 重复报警间隔时间，自第一次告警等待多久发送压缩的警报，等待期内多个报警同时发出
+  receiver: 'webhook' #报警接收者
+
+receivers:
+  - name: 'webhook'
+    webhook_configs:
+      - url: 'http://192.168.80.94:9092'
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']

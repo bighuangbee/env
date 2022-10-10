@@ -1,0 +1,43 @@
+version: '3.1'
+
+services:
+  #机器节点监控
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - 9100:9100
+
+  node-exporter-2:
+    image: prom/node-exporter
+    ports:
+      - 9101:9100
+
+  nginx_exporter:
+    image: nginx/nginx-prometheus-exporter:0.10.0
+    ports:
+      - 9113:9113
+    command: "-nginx.scrape-uri http://192.168.80.94:8080/nginx_status"
+
+  mysql_exporter:
+    image: prom/mysqld-exporter
+    ports:
+      - 9104:9104
+    environment:
+      DATA_SOURCE_NAME: "root:hiDronedb2020.@(192.168.80.94:23306)/"
+
+  redis_exporter:
+    image: oliver006/redis_exporter
+    ports:
+      - 9121:9121
+    command: "-redis.addr 192.168.80.94:6379 -redis-only-metrics -redis.password hiDronedb2020."
+
+  cadvisor:
+    image: google/cadvisor:v0.24.1
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - 8081:8080

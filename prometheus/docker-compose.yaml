@@ -1,0 +1,39 @@
+version: '3.1'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.7.2
+    container_name: prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alert_rules:/etc/prometheus/alert_rules #告警的规则
+    command:
+      --config.file=/etc/prometheus/prometheus.yml
+      --web.enable-lifecycle
+
+  pushgateway:
+    image: prom/pushgateway
+    container_name: pushgateway
+    ports:
+      - 9091:9091
+
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      #数据库储存路径
+      - ~/data/grafana_data:/var/lib/grafana

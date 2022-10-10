@@ -1,0 +1,41 @@
+version: '3.1'
+services:
+  redis_node_1:
+    image: redis:6.0
+    container_name: redis_node_1
+    restart: always
+    ports:
+      - ${REDIS_NODE_1_PORT}:6379
+      - 16379:16379
+    volumes:
+      - ./redis/node1/redis.conf:/usr/local/etc/redis/redis.conf
+      - ${STORAGE_PATH}/redis_node_1:/data
+    command:
+      redis-server /usr/local/etc/redis/redis.conf --requirepass hiDronedb2020.
+
+  redis_node_2:
+    image: redis:6.0
+    container_name: redis_node_2
+    restart: always
+    ports:
+      - ${REDIS_NODE_2_PORT}:6380
+      - 16380:16380
+    volumes:
+      - ./redis/node2/redis.conf:/usr/local/etc/redis/redis.conf
+      - ${STORAGE_PATH}/redis_node_2:/data
+    command:
+      redis-server /usr/local/etc/redis/redis.conf --requirepass hiDronedb2020.
+
+  redis_node_3:
+    image: redis:6.0
+    container_name: redis_node_3
+    restart: always
+    ports:
+      - ${REDIS_NODE_3_PORT}:6381
+      - 16381:16381
+    volumes:
+      - ./redis/node3/redis.conf:/usr/local/etc/redis/redis.conf
+      - ${STORAGE_PATH}/redis_node_3:/data
+    command:
+      redis-server /usr/local/etc/redis/redis.conf --requirepass hiDronedb2020.
+

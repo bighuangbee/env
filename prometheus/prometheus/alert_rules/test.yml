@@ -1,0 +1,11 @@
+groups:
+  - name: vistorTest
+    rules:
+      - alert: vistorTest
+        expr: vistorCount > 100
+        for: 5s
+        labels:
+          status: warning
+        annotations:
+          summary: "{{$labels.instance}}:访问流量超标!--{{ $value }}--"
+          description: "{{$labels.instance}}:访问流量超标!"

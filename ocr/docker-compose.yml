@@ -1,0 +1,9 @@
+version: '3'
+services:
+  orc:
+    image: ocr
+    build: ./gosseract
+    container_name: ocr
+    volumes:
+      - "~/workspace:/root/workspace"
+    tty: true

@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  redis_sentinel_1:
+    image: redis:6.0
+    container_name: redis_sentinel_1
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    restart: always
+    ports:
+      - ${REDIS_SENTIENL_1_PORT}:26379
+    volumes:
+      - ./sentinel1.conf:/usr/local/etc/redis/sentinel.conf
+
+  redis_sentinel_2:
+    image: redis:6.0
+    container_name: redis_sentinel_2
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    restart: always
+    ports:
+      - ${REDIS_SENTIENL_2_PORT}:26379
+    volumes:
+      - ./sentinel2.conf:/usr/local/etc/redis/sentinel.conf
+
+  redis_sentinel_3:
+    image: redis:6.0
+    container_name: redis_sentinel_3
+    command: redis-sentinel /usr/local/etc/redis/sentinel.conf
+    restart: always
+    ports:
+      - ${REDIS_SENTIENL_3_PORT}:26379
+    volumes:
+      - ./sentinel3.conf:/usr/local/etc/redis/sentinel.conf

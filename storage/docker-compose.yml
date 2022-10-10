@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+  mysql_master_1:
+    image: mysql:5.7.16
+    restart: always
+    container_name: mysql_master_1
+    volumes:
+#      - ${STORAGE_PATH}/mysql_master_1/data:/var/lib/mysql  # mac映射到宿主机会报错, 需要docker volumes
+      - mysql_master_1_volume:/var/lib/mysql
+      - ./mysql/master1/my.cnf:/etc/mysql/my.cnf
+    ports:
+      - ${MYSQL_MASTER_1_PORT}:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: hiDronedb2020. #root初始密码 hiDrone12#!
+      TZ: Asia/Shanghai
+    networks:
+      - hidrone_env
+
+
+  redis_node_1:
+    image: redis:6.0
+    container_name: redis_node_1
+    restart: always
+    ports:
+      - ${REDIS_NODE_1_PORT}:6379
+    volumes:
+      - ./redis/node1/redis.conf:/usr/local/etc/redis/redis.conf
+#      - ${STORAGE_PATH}/redis_node_1:/data
+    command:
+      redis-server /usr/local/etc/redis/redis.conf --requirepass hiDronedb2020.
+
+volumes:
+  mysql_master_1_volume:
+  mysql_master_2_volume:
+
+networks:
+  hidrone_env:
+    external:
+      name: hidrone_net

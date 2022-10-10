@@ -1,0 +1,15 @@
+version: '3.1'
+
+services:
+  mozi_dev:
+    build: ./
+    container_name: mozi_dev
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ~/workspace:/root/workspace
+      - ~/workspace/code/hiar_mozi/mozi-ar-render-service/internal/module/ar_render/service/mozi_render/libs:/app/mozi_render/libs #ptz ocr
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa
+      - ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+    tty: true
+    ports:
+      - 8107:8107

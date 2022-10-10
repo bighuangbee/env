@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7.16
+    container_name: storage_mysql_master
+    ports:
+      - 13306:3306
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=07b7e8#V5@d1a2K9
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
+      --max_allowed_packet=128M
+      --sql-mode="STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+      --log-bin=mysql-bin
+      --sync_binlog=1
+      --server-id=100
+      --expire-logs-days=7
+      --binlog-ignore-db=information_schema
+      --binlog-ignore-db=performation_schema
+      --binlog-ignore-db=sys
+
+networks:
+  storage_net:
+    external: true

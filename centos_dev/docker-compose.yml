@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  centos_dev:
+    build: ./
+    container_name: centos_dev
+    networks:
+      - app_net
+    volumes:
+      - ${WORKSPACE_CODE}:/root/workspace/ # 项目代码
+      - ${WORKSPACE_CODE}/hidrone/svc/recognition/rtc/libs:/root/rtc_recognize/rtc/libs # /root/rtc_recognize为镜像打包固定目录
+      - ${WORKSPACE_CODE}/hidrone/svc/recognition/face/libs:/root/rtc_recognize/face/libs
+      - ${WORKSPACE_CODE}/hidrone/svc/recognition:/data/recognize
+    tty: true
+    environment:
+      MICRO_REGISTRY: ${MICRO_REGISTRY}
+      MICRO_REGISTRY_ADDRESS: ${MICRO_REGISTRY_ADDRESS}
+#    mac_address: 02:42:ac:12:00:02
+    mac_address: 14:7d:da:b4:72:89
+    ports:
+#      - 6060:6060
+      - 60001:60001
+      - 60002:60002
+      - 10008:10008
+
+networks:
+  app_net:
+    external:
+      name: hidrone_net

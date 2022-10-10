@@ -1,0 +1,9 @@
+version: '3.1'
+
+services:
+  gocv:
+    build: ./
+    container_name: gocv
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    tty: true

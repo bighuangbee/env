@@ -1,0 +1,29 @@
+groups:
+  - name: nginxExporter
+    rules:
+      - alert: nginxDown
+        expr: nginx_up == 0
+        for: 5s
+        labels:
+          status: High
+        annotations:
+          summary: "{{ $labels.job }} down"
+          description: "{{ $labels.instance }} has been down for more than 5s."
+
+      - alert: nginxActiveHigh
+        expr: nginx_connections_active > 500
+        for: 5s
+        labels:
+          status: High
+        annotations:
+          summary: "{{ $labels.job }} active high"
+          description: "{{ $labels.instance }} connections active is more than 500, current value is: {{ $value }}."
+
+      - alert: nginxWaitingHigh
+        expr: nginx_connections_waiting > 50
+        for: 5s
+        labels:
+          status: High
+        annotations:
+          summary: "{{ $labels.job }} waiting high"
+          description: "{{ $labels.instance }} connections waiting is more than 50, current value is: {{ $value }}."

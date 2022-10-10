@@ -1,0 +1,10 @@
+prefix=/root/rtc_recognize/libs/openvino_2020.4.287/opencv
+exec_prefix=${prefix}
+includedir=${prefix}/include
+libdir=${exec_prefix}/lib
+
+Name: opencv
+Description: The opencv library
+Version: 4.4.0
+Cflags: -I${includedir}/opencv -I${includedir}/opencv2
+Libs: -L${libdir} -lopencv_imgcodecs -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_videoio -lopencv_objdetect -lopencv_features2d -lopencv_video -lopencv_dnn -lopencv_calib3d
