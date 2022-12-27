@@ -23,7 +23,3 @@ services:
       - 60002:60002
       - 10008:10008
 
-networks:
-  app_net:
-    external:
-      name: hidrone_net

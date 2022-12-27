@@ -1,17 +1,17 @@
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
-RUN apt update
+RUN apt-get update
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
 
-RUN apt install -y wget git vim gcc g++ make ffmpeg
+RUN apt-get install -y wget git vim gcc g++ make ffmpeg
 #RUN apt install -y software-properties-common gcc-11 #GCC11
 
 #goav
-RUN apt -y install autoconf automake build-essential libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev
-RUN apt -y install libavdevice-dev libavfilter-dev libswscale-dev libavcodec-dev libavformat-dev libswresample-dev libavutil-dev
+RUN apt-get -y install autoconf automake build-essential libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev
+RUN apt-get -y install libavdevice-dev libavfilter-dev libswscale-dev libavcodec-dev libavformat-dev libswresample-dev libavutil-dev
 #RUN apt -y install yasm
 
 ENV FFMPEG_ROOT=$HOME/ffmpeg
@@ -36,7 +36,7 @@ RUN apt install -y libjasper1 libjasper-dev
 
 
 #moziAR
-RUN apt install -y libosmesa6  libglapi-mesa mesa-common-dev
+RUN apt-get install -y libosmesa6  libglapi-mesa mesa-common-dev
 
 WORKDIR /root/
 
