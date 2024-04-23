@@ -1,0 +1,7 @@
+server {
+    listen 81;
+    listen [::]:81;
+    server_name test.com;
+    root /root/domain/test;
+    index index.html;
+}

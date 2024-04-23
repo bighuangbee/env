@@ -1,23 +1,18 @@
 FROM ubuntu:18.04
 
 RUN sed -i "s/archive.ubuntu.com/mirrors.aliyun.com/g" /etc/apt/sources.list
-RUN apt-get update
+RUN apt-get update --fix-missing
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
 
-RUN apt-get install -y wget git vim gcc g++ make ffmpeg
-#RUN apt install -y software-properties-common gcc-11 #GCC11
+RUN apt-get install -y wget git vim make
 
-#goav
-RUN apt-get -y install autoconf automake build-essential libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev
-RUN apt-get -y install libavdevice-dev libavfilter-dev libswscale-dev libavcodec-dev libavformat-dev libswresample-dev libavutil-dev
-#RUN apt -y install yasm
-
-ENV FFMPEG_ROOT=$HOME/ffmpeg
-ENV CGO_LDFLAGS="-L$FFMPEG_ROOT/lib/ -lavcodec -lavformat -lavutil -lswscale -lswresample -lavdevice -lavfilter"
-ENV CGO_CFLAGS="-I$FFMPEG_ROOT/include"
-ENV LD_LIBRARY_PATH=$HOME/ffmpeg/lib
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
+RUN apt install -y gcc-11 g++-11
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 11 && \
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 11
 
 #golang
 RUN wget https://golang.google.cn/dl/go1.17.13.linux-amd64.tar.gz
@@ -58,3 +53,6 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
 
 ENV PATH=/app/mozi_render/libs/ptz_ocr/libs:$PATH
 ENV LD_LIBRARY_PATH=/app/mozi_render/libs/ptz_ocr/libs:$LD_LIBRARY_PATH
+
+EXPOSE 8109
+EXPOSE 9109

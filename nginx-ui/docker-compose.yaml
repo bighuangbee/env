@@ -1,0 +1,28 @@
+
+version: '3.1'
+
+services:
+  nginx-ui:
+    image: uozi/nginx-ui:latest
+    container_name: nginx-ui
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ../data/nginx_domain:/root/domain
+      - ./nginx:/etc/nginx
+      - ./nginx-ui:/etc/nginx-ui
+#    command: /bin/bash -c "mkdir /etc/nginx/streams-available"
+#network_mode: "host" #mac电脑不适用
+    ports:
+      - 8080:80
+      - 8443:443
+#domain端口
+      - 81:81
+
+# 使用前配置
+# 创建宿主机目录 mkdir nginx/streams-available nginx/streams-enabled
+# 修改nginx/nginx.conf, user root;
+# 修改nginx-ui/app.ini
+#	AccessLogPath = /var/log/nginx/access.local.log
+#	ErrorLogPath = /var/log/nginx/error.local.log
+# 创建宿主机domain目录，data/nginx_domain

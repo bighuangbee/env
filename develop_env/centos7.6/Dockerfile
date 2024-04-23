@@ -2,7 +2,7 @@ FROM centos:7.6.1810
 
 WORKDIR /root
 
-RUN yum -y install vim make wget
+RUN yum -y install vim make wget gstreamer1
 
 
 #golang

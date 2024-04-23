@@ -18,17 +18,20 @@ services:
       - 9113:9113
       - 9112:9112
       - 8112:8112
+      - 8113:8113
 
   mozi_dev_1804:
-    build: mozi_dev-ubuntu18.04
+    build: mozi_dev_1804
     container_name: mozi_dev_1804
     volumes:
       - ~/workspace:/root/workspace
       - ~/workspace/code/hiar_mozi/mozi-ar-render-service/internal/module/ar_render/service/mozi_render/libs:/app/mozi_render/libs #ptz ocr
       - ~/.ssh/id_rsa:/root/.ssh/id_rsa
       - ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
-    network_mode: host
+#    network_mode: host
     tty: true
+    ports:
+      - 8109:8109
 
   golang_1.19:
     build: golang_env/go1.19
@@ -44,6 +47,9 @@ services:
     build: centos7.6
     container_name: centos7.6
     volumes:
-      - ~/workspace/:/root/workspace
+      - ~/:/root/
+      - /dev:/dev
+      - /run/dbus:/run/dbus
+      - /var/run/dbus:/var/run/dbus
     tty: true
     network_mode: host
